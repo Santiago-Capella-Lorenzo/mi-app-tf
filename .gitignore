@@ -1,9 +1,0 @@
-# Ignorar archivos de log
-*.log
-
-# Ignorar la carpeta de compilación
-/build/
-
-# Ignorar archivos ocultos de sistema
-.DS_Store  # Solo en macOS
-Thumbs.db   # Solo en Windows
