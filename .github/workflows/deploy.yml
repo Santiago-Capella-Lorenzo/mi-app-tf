@@ -1,14 +1,17 @@
 name: Deploy Terraform to AWS
 
 on:
-  workflow_dispatch
-#  push:
-#    branches:
-#      - main  # Ejecutar solo cuando haya cambios en la rama principal
+  workflow_dispatch:
+  push:
+    branches:
+      - main  # Ejecutar solo cuando haya cambios en la rama principal
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    env:
+          ENVIRONMENT: "production"
 
     steps:
     - name: Checkout del código
@@ -31,3 +34,18 @@ jobs:
 
     - name: Aplicar Terraform
       run: terraform apply -auto-approve
+
+    - name: AWS Plan Copy
+      id: copyfrom
+      run: aws s3 cp s3://your-bucket/yourapp-${{ env.ENVIRONMENT }}.tfstate yourapp-${{ env.ENVIRONMENT }}.tfstate
+      
+
+    - name: Terraform Apply
+      id: apply
+      if: github.event_name == 'push'
+      run: terraform apply -auto-approve
+          
+    - name: AWS Plan Copy
+      if: github.event_name == 'push' && steps.apply.outcome == 'success'
+      run: aws s3 cp terraform.tfstate s3://your-bucket/yourapp-${{ env.ENVIRONMENT }}.tfstate
+      id: copy
