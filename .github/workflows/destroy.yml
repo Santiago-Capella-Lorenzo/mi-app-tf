@@ -2,11 +2,6 @@ name: Destroy Terraform to AWS
 
 on:
   workflow_dispatch:
-    inputs:
-      env:
-        description: 'Environment'
-        required: true
-        default: 'dev'
   push:
     branches:
       - main  # Ejecutar solo cuando haya cambios en la rama principal
@@ -36,19 +31,3 @@ jobs:
 
     - name: Aplicar Terraform
       run: terraform destroy -auto-approve
-
-    - name: AWS Plan Copy
-      run: aws s3 cp s3://dxcfvgbhnjmkljbfjdbnd-${{ github.event.inputs.env }}.tfstate terraform.tfstate
-      id: copy
-
-    - name: Show Destroy plan
-      run: terraform plan -destroy
-      continue-on-error: true
-
-    - name: Destroy resources jobs
-      id: destroy
-      run: terraform destroy -auto-approve
-
-    - name: Delete plan file
-      if: steps.destroy.outcome == 'success'
-      run: aws s3 rm s3://dxcfvgbhnjmkljbfjdbnd-${{ github.event.inputs.env }}.tfstate
