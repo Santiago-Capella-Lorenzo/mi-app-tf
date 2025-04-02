@@ -37,7 +37,7 @@ jobs:
 
     - name: AWS Plan Copy
       id: copyfrom
-      run: aws s3 cp s3://your-bucket/yourapp-${{ env.ENVIRONMENT }}.tfstate yourapp-${{ env.ENVIRONMENT }}.tfstate
+      run: aws s3 cp s3://dxcfvgbhnjmkljbfjdbnd-${{ env.ENVIRONMENT }}.tfstate yourapp-${{ env.ENVIRONMENT }}.tfstate
       
 
     - name: Terraform Apply
@@ -47,5 +47,5 @@ jobs:
           
     - name: AWS Plan Copy
       if: github.event_name == 'push' && steps.apply.outcome == 'success'
-      run: aws s3 cp terraform.tfstate s3://your-bucket/yourapp-${{ env.ENVIRONMENT }}.tfstate
+      run: aws s3 cp terraform.tfstate s3://dxcfvgbhnjmkljbfjdbnd-${{ env.ENVIRONMENT }}.tfstate
       id: copy
