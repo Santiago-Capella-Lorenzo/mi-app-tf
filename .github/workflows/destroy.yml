@@ -2,6 +2,11 @@ name: Destroy Terraform to AWS
 
 on:
   workflow_dispatch:
+    inputs:
+      env:
+        description: 'Environment'
+        required: true
+        default: 'dev'
   push:
     branches:
       - main  # Ejecutar solo cuando haya cambios en la rama principal
