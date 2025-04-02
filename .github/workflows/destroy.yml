@@ -38,7 +38,7 @@ jobs:
       run: terraform destroy -auto-approve
 
     - name: AWS Plan Copy
-      run: aws s3 cp s3://your-bucket/yourapp-${{ github.event.inputs.env }}.tfstate terraform.tfstate
+      run: aws s3 cp s3://dxcfvgbhnjmkljbfjdbnd-${{ github.event.inputs.env }}.tfstate terraform.tfstate
       id: copy
 
     - name: Show Destroy plan
@@ -51,4 +51,4 @@ jobs:
 
     - name: Delete plan file
       if: steps.destroy.outcome == 'success'
-      run: aws s3 rm s3://your-bucket/yourapp-${{ github.event.inputs.env }}.tfstate
+      run: aws s3 rm s3://dxcfvgbhnjmkljbfjdbnd-${{ github.event.inputs.env }}.tfstate
