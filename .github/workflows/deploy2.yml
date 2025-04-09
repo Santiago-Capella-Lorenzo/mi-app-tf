@@ -45,7 +45,12 @@ jobs:
       
       - name: AWS Plan Copy
         id: copyfrom
+        run: aws s3 cp .terraform.lock.hcl s3://scl-pruebas/.terraform.lock.hcl
+
+      - name: AWS Plan Copy terraform.lock.hcl
+        id: copyfrom-terraform.lock.hcl
         run: aws s3 cp terraform.tfstate s3://scl-pruebas/terraform.tfstate  
+
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
