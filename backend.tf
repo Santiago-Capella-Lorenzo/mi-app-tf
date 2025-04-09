@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "dxcfvgbhnjmkljbfjdbnd"
+    bucket = "scl-pruebas"
     key    = "path/to/my/key"
     region = "us-east-1"
   }
